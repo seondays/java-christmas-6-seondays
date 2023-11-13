@@ -14,7 +14,8 @@ public enum Menu {
     ICE_CREAM("아이스크림", "dessert", 5_000),
     ZERO_COKE("제로콜라", "drink", 3_000),
     RED_WINE("레드와인", "drink", 60_000),
-    CHAMPAGNE("샴페인", "drink", 25_000);
+    CHAMPAGNE("샴페인", "drink", 25_000),
+    NONE("없음","none",0);
 
     private final String koreaName;
     private final String menuType;
