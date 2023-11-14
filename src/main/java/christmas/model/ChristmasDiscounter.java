@@ -24,10 +24,14 @@ public class ChristmasDiscounter {
     }
 
     private void setResultAmount() {
-        if (day <= LIMIT_DAY) {
+        if (day <= LIMIT_DAY && isOverMinimum()) {
             resultAmount = DEFAULT_AMOUNT + ((day - DAY_CONTROL) * EVERY_DAY_ADD_AMOUNT);
             return;
         }
         resultAmount = 0;
+    }
+
+    private boolean isOverMinimum() {
+        return cost >= 10000;
     }
 }
