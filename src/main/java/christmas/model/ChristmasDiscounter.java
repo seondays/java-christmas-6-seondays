@@ -1,10 +1,8 @@
 package christmas.model;
 
-public class ChristmasDiscounter {
-    private static final int LIMIT_DAY = 25;
-    private static final int DEFAULT_AMOUNT = 1000;
-    private static final int EVERY_DAY_ADD_AMOUNT = 100;
-    private static final int DAY_CONTROL = 1;
+import christmas.utils.constant.ChristmasDiscounterConstant;
+
+public class ChristmasDiscounter implements Discounter {
     private final int day;
     private final int cost;
     private int resultAmount;
@@ -15,23 +13,28 @@ public class ChristmasDiscounter {
         setResultAmount();
     }
 
+    @Override
     public int discountCost() {
         return cost - resultAmount;
     }
 
+    @Override
     public int getResultAmount() {
         return resultAmount;
     }
 
     private void setResultAmount() {
-        if (day <= LIMIT_DAY && isOverMinimum()) {
-            resultAmount = DEFAULT_AMOUNT + ((day - DAY_CONTROL) * EVERY_DAY_ADD_AMOUNT);
+        if (day <= ChristmasDiscounterConstant.LIMIT_DAY.getNumber() && isOverMinimum()) {
+            resultAmount =
+                    ChristmasDiscounterConstant.DISCOUNT_DEFAULT_AMOUNT.getNumber()
+                            + ((day - ChristmasDiscounterConstant.CHRISTMAS_DAY_CONTROL.getNumber())
+                            * ChristmasDiscounterConstant.EVERY_DAY_ADD_AMOUNT.getNumber());
             return;
         }
         resultAmount = 0;
     }
 
     private boolean isOverMinimum() {
-        return cost >= 10000;
+        return cost >= ChristmasDiscounterConstant.MINIMUM_DISCOUNT_COST.getNumber();
     }
 }
