@@ -22,7 +22,7 @@ public class SpecialDiscounter {
     }
 
     private void setResultAmount() {
-        if (isCanDiscount()) {
+        if (isCanDiscount() && isOverMinimum()) {
             resultAmount = 1000;
             return;
         }
@@ -33,5 +33,9 @@ public class SpecialDiscounter {
         LocalDate date = LocalDate.of(2023, 12, day);
         int dateNumber = date.getDayOfWeek().getValue();
         return dateNumber == 7 || day == 25;
+    }
+
+    private boolean isOverMinimum() {
+        return cost >= 10000;
     }
 }
