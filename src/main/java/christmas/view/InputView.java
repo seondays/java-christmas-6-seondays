@@ -14,4 +14,9 @@ public class InputView {
     }
 
     //메뉴 입력 받기
+    public String getInputMenu() {
+        String input = Console.readLine();
+        inputValidator.validateInputMenu(input);
+        return input;
+    }
 }

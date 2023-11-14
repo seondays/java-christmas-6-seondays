@@ -1,5 +1,7 @@
 package christmas.utils;
 
+import java.util.List;
+
 public class InputValidator {
 
     // 날짜 검증 메서드 만들기
@@ -10,13 +12,26 @@ public class InputValidator {
     }
 
     // 메뉴 검증 메서드 만들기
+    public void validateInputMenu(String input) {
+        List<String> inputSplit = Parser.splitInput(input);
+        validateInputMenuBlank(input);
+        validateInputFormat(inputSplit);
+    }
 
     // 메뉴이름-수량 의 형식인지
-    // 메뉴판에 존재하는 메뉴인지
-    // 최소 1개 이상 20개 이하의 주문인지
+    private void validateInputFormat(List<String> input) {
+        for(String order : input) {
+            if(!order.matches("[가-힣]+-\\d+")) {
+                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            }
+        }
+    }
     // 빈 값인지
-    // 음료만 단독으로 주문할 수 없음
-
+    private void validateInputMenuBlank(String input) {
+        if (input.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        }
+    }
     // 입력값이 빈 값인지
     private void validateInputBlank(String input) {
         if (input.isBlank()) {
