@@ -25,4 +25,13 @@ public class Gift {
         }
         gift = Menu.NONE;
     }
+
+    @Override
+    public String toString() {
+        String output = gift.getKoreaName();
+        if (cost >= GIFT_CONDITION) {
+            output += " 1개";
+        }
+        return output;
+    }
 }
