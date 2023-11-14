@@ -8,9 +8,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class RestaurantManagerTest {
+class DecemberDiscountCheckerTest {
 
-    private RestaurantManager restaurantManager;
+    private DecemberDiscountChecker restaurantManager;
     private static Map<Menu, Integer> orderedMenu;
 
     @BeforeEach
@@ -23,7 +23,7 @@ class RestaurantManagerTest {
     @DisplayName("주어진 날짜에 따라 주문한 메뉴 중 몇가지 메뉴를 할인할지 알아낸다")
     @CsvSource(value = {"3:2", "15:5"}, delimiter = ':')
     void checkWeekOrWeekend(int days, int week) {
-        restaurantManager = new RestaurantManager(days, orderedMenu);
+        restaurantManager = new DecemberDiscountChecker(days, orderedMenu);
         assertThat(restaurantManager.countDiscountMenu()).isEqualTo(week);
     }
 }

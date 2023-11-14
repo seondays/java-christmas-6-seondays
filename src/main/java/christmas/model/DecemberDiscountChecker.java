@@ -4,13 +4,21 @@ import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class RestaurantManager {
+public class DecemberDiscountChecker {
     private int day;
     private Map<Menu, Integer> orderedMenu;
 
-    public RestaurantManager(int day, Map<Menu, Integer> orderedMenu) {
+    public DecemberDiscountChecker(int day, Map<Menu, Integer> orderedMenu) {
         this.day = day;
         this.orderedMenu = orderedMenu;
+    }
+
+    // 해당되는 할인이 평일인지 주말인지 외부에 알려줘야 해
+    public String getWeekOrWeekend() {
+        if (isDayWeekend()) {
+            return "주말 할인: ";
+        }
+        return "평일 할인: ";
     }
 
     // 날짜에 따라 메뉴에서 몇개를 할인해야 할지 알려줘
@@ -37,7 +45,6 @@ public class RestaurantManager {
     }
 
     // 메뉴에서 메인이 몇갠지 알려줘
-    //갯수를 가지고 12월 이벤트 할인에 전달해서 할인을 받아와야 한다
     private int countMainMenu() {
         return orderedMenu.entrySet().stream()
                 .filter(entry -> entry.getKey().getMenuType().equals("main"))
