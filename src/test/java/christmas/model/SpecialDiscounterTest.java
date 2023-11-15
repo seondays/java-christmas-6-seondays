@@ -11,16 +11,18 @@ class SpecialDiscounterTest {
     @ParameterizedTest
     @DisplayName("특별 할인 조건에 맞게 할인 금액이 계산되는지")
     @CsvSource(value = {"3:1000", "26:0", "25:1000"}, delimiter = ':')
-    void discountByCondition(int day, int expected) {
-        SpecialDiscounter specialDiscounter = new SpecialDiscounter(day, 30_000);
+    void discountByCondition(int days, int expected) {
+        Date date = new Date(days);
+        SpecialDiscounter specialDiscounter = new SpecialDiscounter(date, 30_000);
         assertThat(specialDiscounter.getResultAmount()).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @DisplayName("특별 할인 금액만큼 할인이 잘 적용되는지")
     @CsvSource(value = {"28:30000","25:29000","13:30000"}, delimiter = ':')
-    void discountCost(int day, int expected) {
-        SpecialDiscounter specialDiscounter = new SpecialDiscounter(day, 30_000);
+    void discountCost(int days, int expected) {
+        Date date = new Date(days);
+        SpecialDiscounter specialDiscounter = new SpecialDiscounter(date, 30_000);
         assertThat(specialDiscounter.discountCost()).isEqualTo(expected);
     }
 
