@@ -16,4 +16,8 @@ public class Parser {
     public static String[] splitMenu(String menu) {
         return menu.split(MENU_REGEX);
     }
+
+    public static int parseStringToInt(String input) {
+        return Integer.parseInt(input);
+    }
 }
