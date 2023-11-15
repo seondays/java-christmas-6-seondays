@@ -33,21 +33,15 @@ public class Controller {
 
     public void run() {
         orderProcess();
-        // 할인전 총주문 금액 출력
         OutputView.printBeforeDiscountCost(beforeDiscountCost);
-        // 총 주문 금액에 따라서 샴페인 증정하기
         startGiftEvent();
-        // 평일 혹은 주말 할인 하기
         startDiscount(DecemberDiscounter.of(date, beforeDiscountCost, orderedMenu));
-        // 크리스마스 특별 할인 하기
         startDiscount(ChristmasDiscounter.of(date, afterDiscountCost));
-        // 특별할인
         startDiscount(SpecialDiscounter.of(date, afterDiscountCost));
         printBenefitResult();
         inputView.close();
     }
 
-    // 주문받기 시작
     public void orderProcess() {
         OutputView.printInputDateMessage();
         date = new Date(getInputDate());
@@ -57,7 +51,6 @@ public class Controller {
         OutputView.printMenu(orderedMenu);
     }
 
-    // 마지막에 결과 출력해주기
     public void printBenefitResult() {
         OutputView.printBenefitInformation(benefitResultMaker.getBenefitResult());
         OutputView.printBenefitCost(discountAmount);
@@ -71,7 +64,6 @@ public class Controller {
         discountAmount += discounter.getResultAmount();
     }
 
-    // 증정 이벤트를 체크해서 진행
     public void startGiftEvent() {
         Gift gift = new Gift(beforeDiscountCost);
         OutputView.printGift(gift.toString());
@@ -79,7 +71,6 @@ public class Controller {
         discountAmount += gift.getGiftPrice();
     }
 
-    // 날짜 입력 받기 구현
     public int getInputDate() {
         while (isInputIncomplete) {
             try {
@@ -90,7 +81,6 @@ public class Controller {
         }
     }
 
-    // 메뉴 입력 받아서 리턴하기
     public Map<Menu, Integer> getMenu() {
         while (isInputIncomplete) {
             try {

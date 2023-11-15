@@ -43,7 +43,6 @@ public class DecemberDiscounter implements Discounter {
         return DiscountMessage.WEEK.getMessage();
     }
 
-    // 날짜에 따라 메뉴에서 몇개를 할인해야 할지 알려줘
     public int countDiscountMenu() {
         if (isDayWeekend()) {
             return countMainMenu();
@@ -51,14 +50,12 @@ public class DecemberDiscounter implements Discounter {
         return countDessertMenu();
     }
 
-    // 날짜가 평일인지 주말인지 알려줘
     private boolean isDayWeekend() {
         int dateNumber = date.getNumericDate();
         return dateNumber == DiscounterConstant.SATURDAY_MARK.getNumber()
                 || dateNumber == DiscounterConstant.FRIDAY_MARK.getNumber();
     }
 
-    // 메뉴에서 디저트가 몇갠지 알려줘
     private int countDessertMenu() {
         return orderedMenu.entrySet().stream()
                 .filter(entry -> entry.getKey().getMenuType().equals("dessert"))
@@ -66,7 +63,6 @@ public class DecemberDiscounter implements Discounter {
                 .sum();
     }
 
-    // 메뉴에서 메인이 몇갠지 알려줘
     private int countMainMenu() {
         return orderedMenu.entrySet().stream()
                 .filter(entry -> entry.getKey().getMenuType().equals("main"))
