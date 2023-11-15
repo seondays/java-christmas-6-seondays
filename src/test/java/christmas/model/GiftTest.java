@@ -2,6 +2,7 @@ package christmas.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.utils.constant.Menu;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

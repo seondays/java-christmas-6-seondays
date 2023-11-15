@@ -1,4 +1,4 @@
-package christmas.model;
+package christmas.utils.constant;
 
 public enum Badge {
     STAR(5_000,"별"),
@@ -6,8 +6,8 @@ public enum Badge {
     SANTA(20_000,"산타"),
     NONE(0,"없음");
 
-    private int condition;
-    private String koreaName;
+    private final int condition;
+    private final String koreaName;
 
     Badge(int condition, String koreaName) {
         this.condition = condition;
