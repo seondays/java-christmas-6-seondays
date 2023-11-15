@@ -29,6 +29,6 @@ class GiftTest {
     @DisplayName("증정품의 할인 가치가 얼마인지 알맞게 반환하는지")
     void getGiftResultAmount() {
         Gift gift = new Gift(120000);
-        assertThat(gift.getGiftAmount()).isEqualTo(25000);
+        assertThat(gift.getGiftPrice()).isEqualTo(25000);
     }
 }
