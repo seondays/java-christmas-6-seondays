@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class DecemberDiscounter implements Discounter {
     private static final int DISCOUNT_AMOUNT = 2023;
-    private int day;
+    private Date date;
     private Map<Menu, Integer> orderedMenu;
     private final int resultAmount;
     private final int cost;
 
-    public DecemberDiscounter(int day, int cost, Map<Menu, Integer> orderedMenu) {
-        this.day = day;
+    public DecemberDiscounter(Date date, int cost, Map<Menu, Integer> orderedMenu) {
+        this.date = date;
         this.cost = cost;
         this.orderedMenu = orderedMenu;
         resultAmount = countDiscountMenu() * DISCOUNT_AMOUNT;
@@ -39,8 +39,6 @@ public class DecemberDiscounter implements Discounter {
         return DiscountMessage.WEEK.getMessage();
     }
 
-    ;
-
     // 날짜에 따라 메뉴에서 몇개를 할인해야 할지 알려줘
     public int countDiscountMenu() {
         if (isDayWeekend()) {
@@ -51,8 +49,7 @@ public class DecemberDiscounter implements Discounter {
 
     // 날짜가 평일인지 주말인지 알려줘
     private boolean isDayWeekend() {
-        LocalDate date = LocalDate.of(DiscounterConstant.YEAR.getNumber(), DiscounterConstant.MONTH.getNumber(), day);
-        int dateNumber = date.getDayOfWeek().getValue();
+        int dateNumber = date.getNumericDate();
         return dateNumber == DiscounterConstant.SATURDAY_MARK.getNumber()
                 || dateNumber == DiscounterConstant.FRIDAY_MARK.getNumber();
     }

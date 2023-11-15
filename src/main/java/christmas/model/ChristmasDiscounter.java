@@ -4,12 +4,12 @@ import christmas.utils.constant.ChristmasDiscounterConstant;
 import christmas.utils.constant.DiscountMessage;
 
 public class ChristmasDiscounter implements Discounter {
-    private final int day;
+    private final Date date;
     private final int cost;
     private int resultAmount;
 
-    public ChristmasDiscounter(int day, int cost) {
-        this.day = day;
+    public ChristmasDiscounter(Date date, int cost) {
+        this.date = date;
         this.cost = cost;
         setResultAmount();
     }
@@ -24,16 +24,16 @@ public class ChristmasDiscounter implements Discounter {
         return resultAmount;
     }
 
+    @Override
     public String getDiscountMessage() {
         return DiscountMessage.CHRISTMAS.getMessage();
     }
 
     private void setResultAmount() {
-        if (day <= ChristmasDiscounterConstant.LIMIT_DAY.getNumber() && isOverMinimum()) {
-            resultAmount =
-                    ChristmasDiscounterConstant.DISCOUNT_DEFAULT_AMOUNT.getNumber()
-                            + ((day - ChristmasDiscounterConstant.CHRISTMAS_DAY_CONTROL.getNumber())
-                            * ChristmasDiscounterConstant.EVERY_DAY_ADD_AMOUNT.getNumber());
+        if (date.getDay() <= ChristmasDiscounterConstant.LIMIT_DAY.getNumber() && isOverMinimum()) {
+            resultAmount = ChristmasDiscounterConstant.DISCOUNT_DEFAULT_AMOUNT.getNumber()
+                    + ((date.getDay() - ChristmasDiscounterConstant.CHRISTMAS_DAY_CONTROL.getNumber())
+                    * ChristmasDiscounterConstant.EVERY_DAY_ADD_AMOUNT.getNumber());
             return;
         }
         resultAmount = 0;

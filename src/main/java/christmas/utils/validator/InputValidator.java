@@ -11,7 +11,6 @@ public class InputValidator {
     public void validateInputDate(String input) {
         validateInputBlank(input);
         validateInputInt(input);
-        validateRange(input);
     }
 
     // 메뉴 검증 메서드 만들기
@@ -47,14 +46,6 @@ public class InputValidator {
     // 입력값이 숫자인지
     private void validateInputInt(String input) {
         if (!input.chars().allMatch(Character::isDigit)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DAY.getMessage());
-        }
-    }
-
-    // 입력값이 1~31 사이인지
-    private void validateRange(String input) {
-        int inputInt = Integer.parseInt(input);
-        if (inputInt < 1 || inputInt > 31) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DAY.getMessage());
         }
     }

@@ -2,15 +2,14 @@ package christmas.model;
 
 import christmas.utils.constant.DiscountMessage;
 import christmas.utils.constant.DiscounterConstant;
-import java.time.LocalDate;
 
 public class SpecialDiscounter implements Discounter {
-    private final int day;
+    private final Date date;
     private final int cost;
     private int resultAmount;
 
-    public SpecialDiscounter(int day, int cost) {
-        this.day = day;
+    public SpecialDiscounter(Date date, int cost) {
+        this.date = date;
         this.cost = cost;
         setResultAmount();
     }
@@ -39,11 +38,9 @@ public class SpecialDiscounter implements Discounter {
     }
 
     private boolean isCanDiscount() {
-        LocalDate date = LocalDate.of(DiscounterConstant.YEAR.getNumber(),
-                DiscounterConstant.MONTH.getNumber(), day);
-        int dateNumber = date.getDayOfWeek().getValue();
+        int dateNumber = date.getNumericDate();
         return dateNumber == DiscounterConstant.SUNDAY_MARK.getNumber()
-                || day == DiscounterConstant.CHRISTMAS.getNumber();
+                || date.getDay() == DiscounterConstant.CHRISTMAS.getNumber();
     }
 
     private boolean isOverMinimum() {

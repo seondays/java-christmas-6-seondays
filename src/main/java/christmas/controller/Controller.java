@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.model.Date;
 import christmas.utils.constant.Badge;
 import christmas.model.ChristmasDiscounter;
 import christmas.model.Discounter;
@@ -23,7 +24,7 @@ public class Controller {
     private int beforeDiscountCost;
     private int afterDiscountCost;
     private int discountAmount;
-    private int day;
+    private Date date;
 
     public Controller(StringMaker stringMaker, InputView inputView) {
         this.stringMaker = stringMaker;
@@ -37,11 +38,11 @@ public class Controller {
         // 총 주문 금액에 따라서 샴페인 증정하기
         startGiftEvent();
         // 평일 혹은 주말 할인 하기
-        startDiscount(new DecemberDiscounter(day, beforeDiscountCost, orderedMenu));
+        startDiscount(new DecemberDiscounter(date, beforeDiscountCost, orderedMenu));
         // 크리스마스 특별 할인 하기
-        startDiscount(new ChristmasDiscounter(day, afterDiscountCost));
+        startDiscount(new ChristmasDiscounter(date, afterDiscountCost));
         // 특별할인
-        startDiscount(new SpecialDiscounter(day, afterDiscountCost));
+        startDiscount(new SpecialDiscounter(date, afterDiscountCost));
         printResult();
         inputView.close();
     }
@@ -49,10 +50,10 @@ public class Controller {
     // 주문받기 시작
     public void orderProcess() {
         OutputView.printInputDateMessage();
-        day = getInputDate();
+        date = new Date(getInputDate());
         OutputView.printInputMenuMessage();
         orderedMenu = getMenu();
-        OutputView.printDayInformation(day);
+        OutputView.printDayInformation(date.getDay());
         OutputView.printMenu(orderedMenu);
     }
 
