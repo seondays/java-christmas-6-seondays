@@ -25,7 +25,7 @@ class DecemberDiscounterTest {
     @CsvSource(value = {"3:2", "15:5"}, delimiter = ':')
     void checkWeekOrWeekend(int days, int week) {
         Date date = new Date(days);
-        restaurantManager = new DecemberDiscounter(date, 10000, orderedMenu);
+        restaurantManager = DecemberDiscounter.of(date, 10000, orderedMenu);
         assertThat(restaurantManager.countDiscountMenu()).isEqualTo(week);
     }
 
@@ -34,7 +34,7 @@ class DecemberDiscounterTest {
     @DisplayName("주어진 날짜에 따라 올바르게 할인되는지 테스트")
     void discountCostRight(int days, int cost, int expected) {
         Date date = new Date(days);
-        decemberDiscounter = new DecemberDiscounter(date, cost, orderedMenu);
+        decemberDiscounter = DecemberDiscounter.of(date, cost, orderedMenu);
         assertThat(decemberDiscounter.discountCost()).isEqualTo(expected);
     }
 
@@ -44,7 +44,7 @@ class DecemberDiscounterTest {
     @DisplayName("얼마를 할인받았는지를 반환하는지 테스트")
     void getDiscountAmount(int days, int menuCount, int expected) {
         Date date = new Date(days);
-        decemberDiscounter = new DecemberDiscounter(date, menuCount, orderedMenu);
+        decemberDiscounter = DecemberDiscounter.of(date, menuCount, orderedMenu);
         assertThat(decemberDiscounter.getResultAmount()).isEqualTo(expected);
     }
 }

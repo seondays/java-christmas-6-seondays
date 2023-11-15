@@ -12,7 +12,7 @@ class ChristmasDiscounterTest {
     @DisplayName("날짜에 맞춰서 할인 금액이 올바르게 계산되는지 테스트")
     void discountByDay(int day, int expected) {
         Date date = new Date(day);
-        ChristmasDiscounter christmasDiscounter = new ChristmasDiscounter(date, 20_000);
+        ChristmasDiscounter christmasDiscounter = ChristmasDiscounter.of(date, 20_000);
         assertThat(christmasDiscounter.getResultAmount()).isEqualTo(expected);
     }
 
@@ -21,7 +21,7 @@ class ChristmasDiscounterTest {
     @DisplayName("할인 후 금액을 잘 반환해주는지 테스트")
     void discountCost(int day, int expected) {
         Date date = new Date(day);
-        ChristmasDiscounter christmasDiscounter = new ChristmasDiscounter(date, 20_000);
+        ChristmasDiscounter christmasDiscounter = ChristmasDiscounter.of(date, 20_000);
         assertThat(christmasDiscounter.discountCost()).isEqualTo(expected);
     }
 }

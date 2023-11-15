@@ -13,7 +13,7 @@ class SpecialDiscounterTest {
     @CsvSource(value = {"3:1000", "26:0", "25:1000"}, delimiter = ':')
     void discountByCondition(int days, int expected) {
         Date date = new Date(days);
-        SpecialDiscounter specialDiscounter = new SpecialDiscounter(date, 30_000);
+        SpecialDiscounter specialDiscounter = SpecialDiscounter.of(date, 30_000);
         assertThat(specialDiscounter.getResultAmount()).isEqualTo(expected);
     }
 
@@ -22,7 +22,7 @@ class SpecialDiscounterTest {
     @CsvSource(value = {"28:30000","25:29000","13:30000"}, delimiter = ':')
     void discountCost(int days, int expected) {
         Date date = new Date(days);
-        SpecialDiscounter specialDiscounter = new SpecialDiscounter(date, 30_000);
+        SpecialDiscounter specialDiscounter = SpecialDiscounter.of(date, 30_000);
         assertThat(specialDiscounter.discountCost()).isEqualTo(expected);
     }
 
