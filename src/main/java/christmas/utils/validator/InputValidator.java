@@ -1,6 +1,7 @@
-package christmas.utils;
+package christmas.utils.validator;
 
 import christmas.utils.constant.ErrorMessage;
+import christmas.utils.string.Parser;
 import java.util.List;
 
 public class InputValidator {

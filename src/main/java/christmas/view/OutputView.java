@@ -2,7 +2,7 @@ package christmas.view;
 
 import christmas.utils.constant.Badge;
 import christmas.utils.constant.Menu;
-import christmas.utils.Formatter;
+import christmas.utils.string.Formatter;
 import christmas.utils.constant.ViewInformationMessage;
 import java.util.Map;
 

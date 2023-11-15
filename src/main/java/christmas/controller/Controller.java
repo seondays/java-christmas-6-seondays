@@ -9,7 +9,7 @@ import christmas.model.DecemberDiscounter;
 import christmas.model.RestaurantWaiter;
 import christmas.model.StringMaker;
 import christmas.model.SpecialDiscounter;
-import christmas.utils.Parser;
+import christmas.utils.string.Parser;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.List;

@@ -1,4 +1,4 @@
-package christmas.utils;
+package christmas.utils.string;
 
 import java.text.DecimalFormat;
 

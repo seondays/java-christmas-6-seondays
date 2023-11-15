@@ -1,6 +1,6 @@
 package christmas.model;
 
-import christmas.utils.Formatter;
+import christmas.utils.string.Formatter;
 import christmas.utils.constant.DiscountMessage;
 import christmas.utils.constant.Menu;
 
