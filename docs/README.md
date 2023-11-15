@@ -105,5 +105,5 @@
 | DecemberDiscounter | 12월 평일/주말 할인을 담당하는 클래스        |
 | SpecialDiscounter | 특별 할인을 담당하는 클래스               |
 | RestaurantWaiter | 입력받은 메뉴를 저장하고 관리하는 클래스        |
-| StringMaker      | 할인 받은 내역들을 출력하기 위한 역할을 하는 클래스 |
+| BenefitResultMaker      | 할인 받은 내역들을 출력하기 위한 역할을 하는 클래스 |
 | Gift             | 증정 이벤트에 관한 일을 담당하는 클래스        |
