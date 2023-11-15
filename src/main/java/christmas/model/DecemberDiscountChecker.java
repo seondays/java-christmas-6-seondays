@@ -1,5 +1,8 @@
 package christmas.model;
 
+import christmas.utils.constant.DiscountMessage;
+import christmas.utils.constant.DiscounterConstant;
+import christmas.utils.constant.Menu;
 import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.Map;
@@ -16,9 +19,9 @@ public class DecemberDiscountChecker {
     // 해당되는 할인이 평일인지 주말인지 외부에 알려줘야 해
     public String getWeekOrWeekend() {
         if (isDayWeekend()) {
-            return "주말 할인: ";
+            return DiscountMessage.WEEKEND.getMessage();
         }
-        return "평일 할인: ";
+        return DiscountMessage.WEEK.getMessage();
     }
 
     // 날짜에 따라 메뉴에서 몇개를 할인해야 할지 알려줘
@@ -31,9 +34,10 @@ public class DecemberDiscountChecker {
 
     // 날짜가 평일인지 주말인지 알려줘
     private boolean isDayWeekend() {
-        LocalDate date = LocalDate.of(2023, 12, day);
+        LocalDate date = LocalDate.of(DiscounterConstant.YEAR.getNumber(), DiscounterConstant.MONTH.getNumber(), day);
         int dateNumber = date.getDayOfWeek().getValue();
-        return dateNumber == 6 || dateNumber == 5;
+        return dateNumber == DiscounterConstant.SATURDAY_MARK.getNumber()
+                || dateNumber == DiscounterConstant.FRIDAY_MARK.getNumber();
     }
 
     // 메뉴에서 디저트가 몇갠지 알려줘
