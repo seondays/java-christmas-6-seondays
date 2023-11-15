@@ -27,11 +27,11 @@ public enum Menu {
         this.price = price;
     }
 
-    public static Menu valuesOf(String koreaName) {
+    public static Menu validateOf(String koreaName) {
         return Arrays.stream(values())
                 .filter(menu -> menu.koreaName.equals(koreaName))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_MENU.getMessage()));
     }
 
     public String getMenuType() {

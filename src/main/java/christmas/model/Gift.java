@@ -17,7 +17,7 @@ public class Gift {
         return gift;
     }
 
-    public int getGiftAmount() {
+    public int getGiftPrice() {
         return gift.getPrice();
     }
 

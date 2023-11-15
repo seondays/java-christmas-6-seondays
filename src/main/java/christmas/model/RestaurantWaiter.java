@@ -1,6 +1,6 @@
 package christmas.model;
 
-import christmas.utils.Parser;
+import christmas.utils.string.Parser;
 import christmas.utils.constant.ErrorMessage;
 import christmas.utils.constant.Menu;
 import java.util.EnumMap;
@@ -12,7 +12,7 @@ public class RestaurantWaiter {
     private final static int MAX_MENU_COUNT = 20;
 
     // 메뉴를 입력받아 다루는 클래스
-    private Map<Menu, Integer> orderedMenu = new EnumMap<>(Menu.class);
+    private final Map<Menu, Integer> orderedMenu = new EnumMap<>(Menu.class);
 
     public RestaurantWaiter(List<String> inputMenu) {
         saveMenu(inputMenu);
@@ -25,8 +25,8 @@ public class RestaurantWaiter {
         for (String menu : input) {
             String[] afterSplit = Parser.splitMenu(menu);
             validateNone(afterSplit[0]);
-            orderedMenu.put(Menu.valuesOf(afterSplit[0])
-                    , orderedMenu.getOrDefault(Menu.valuesOf(afterSplit[0]), 0)
+            orderedMenu.put(Menu.validateOf(afterSplit[0])
+                    , orderedMenu.getOrDefault(Menu.validateOf(afterSplit[0]), 0)
                             + Integer.parseInt(afterSplit[1]));
         }
     }

@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class DecemberDiscounter implements Discounter {
     private static final int DISCOUNT_AMOUNT = 2023;
-    private Date date;
-    private Map<Menu, Integer> orderedMenu;
     private final int resultAmount;
     private final int cost;
+    private final Date date;
+    private final Map<Menu, Integer> orderedMenu;
 
     private DecemberDiscounter(Date date, int cost, Map<Menu, Integer> orderedMenu) {
         this.date = date;

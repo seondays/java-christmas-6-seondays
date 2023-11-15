@@ -8,7 +8,7 @@ import christmas.model.Gift;
 import christmas.utils.constant.Menu;
 import christmas.model.DecemberDiscounter;
 import christmas.model.RestaurantWaiter;
-import christmas.model.StringMaker;
+import christmas.model.BenefitResultMaker;
 import christmas.model.SpecialDiscounter;
 import christmas.utils.string.Parser;
 import christmas.view.InputView;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Controller {
-    private final StringMaker stringMaker;
+    private final BenefitResultMaker benefitResultMaker;
     private final InputView inputView;
     private final boolean isInputIncomplete = true;
     private Map<Menu, Integer> orderedMenu;
@@ -26,8 +26,8 @@ public class Controller {
     private int discountAmount;
     private Date date;
 
-    public Controller(StringMaker stringMaker, InputView inputView) {
-        this.stringMaker = stringMaker;
+    public Controller(BenefitResultMaker benefitResultMaker, InputView inputView) {
+        this.benefitResultMaker = benefitResultMaker;
         this.inputView = inputView;
     }
 
@@ -43,7 +43,7 @@ public class Controller {
         startDiscount(ChristmasDiscounter.of(date, afterDiscountCost));
         // 특별할인
         startDiscount(SpecialDiscounter.of(date, afterDiscountCost));
-        printResult();
+        printBenefitResult();
         inputView.close();
     }
 
@@ -58,8 +58,8 @@ public class Controller {
     }
 
     // 마지막에 결과 출력해주기
-    public void printResult() {
-        OutputView.printBenefitInformation(stringMaker.getSb());
+    public void printBenefitResult() {
+        OutputView.printBenefitInformation(benefitResultMaker.getBenefitResult());
         OutputView.printBenefitCost(discountAmount);
         OutputView.printPaymentCost(afterDiscountCost);
         OutputView.printBadgeInformation(Badge.getBadge(discountAmount));
@@ -67,7 +67,7 @@ public class Controller {
 
     public void startDiscount(Discounter discounter) {
         afterDiscountCost = discounter.discountCost();
-        stringMaker.addString(discounter.getResultAmount(), discounter.getDiscountMessage());
+        benefitResultMaker.addString(discounter.getResultAmount(), discounter.getDiscountMessage());
         discountAmount += discounter.getResultAmount();
     }
 
@@ -75,8 +75,8 @@ public class Controller {
     public void startGiftEvent() {
         Gift gift = new Gift(beforeDiscountCost);
         OutputView.printGift(gift.toString());
-        stringMaker.addGiftString(gift.getGiftAmount());
-        discountAmount += gift.getGiftAmount();
+        benefitResultMaker.addGiftString(gift.getGiftPrice());
+        discountAmount += gift.getGiftPrice();
     }
 
     // 날짜 입력 받기 구현
