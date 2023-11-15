@@ -1,5 +1,6 @@
 package christmas.model;
 
+import christmas.utils.constant.DiscountMessage;
 import christmas.utils.constant.DiscounterConstant;
 import java.time.LocalDate;
 
@@ -22,6 +23,11 @@ public class SpecialDiscounter implements Discounter {
     @Override
     public int getResultAmount() {
         return resultAmount;
+    }
+
+    @Override
+    public String getDiscountMessage() {
+        return DiscountMessage.SPECIAL.getMessage();
     }
 
     private void setResultAmount() {

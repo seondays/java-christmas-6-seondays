@@ -1,6 +1,7 @@
 package christmas.model;
 
 import christmas.utils.constant.ChristmasDiscounterConstant;
+import christmas.utils.constant.DiscountMessage;
 
 public class ChristmasDiscounter implements Discounter {
     private final int day;
@@ -21,6 +22,10 @@ public class ChristmasDiscounter implements Discounter {
     @Override
     public int getResultAmount() {
         return resultAmount;
+    }
+
+    public String getDiscountMessage() {
+        return DiscountMessage.CHRISTMAS.getMessage();
     }
 
     private void setResultAmount() {
