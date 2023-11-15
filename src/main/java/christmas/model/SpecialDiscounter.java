@@ -1,6 +1,6 @@
 package christmas.model;
 
-import christmas.utils.constant.SpecialDiscounterConstant;
+import christmas.utils.constant.DiscounterConstant;
 import java.time.LocalDate;
 
 public class SpecialDiscounter implements Discounter {
@@ -26,21 +26,21 @@ public class SpecialDiscounter implements Discounter {
 
     private void setResultAmount() {
         if (isCanDiscount() && isOverMinimum()) {
-            resultAmount = SpecialDiscounterConstant.DISCOUNT_DEFAULT_AMOUNT.getNumber();
+            resultAmount = DiscounterConstant.DISCOUNT_DEFAULT_AMOUNT.getNumber();
             return;
         }
         resultAmount = 0;
     }
 
     private boolean isCanDiscount() {
-        LocalDate date = LocalDate.of(SpecialDiscounterConstant.YEAR.getNumber(),
-                SpecialDiscounterConstant.MONTH.getNumber(), day);
+        LocalDate date = LocalDate.of(DiscounterConstant.YEAR.getNumber(),
+                DiscounterConstant.MONTH.getNumber(), day);
         int dateNumber = date.getDayOfWeek().getValue();
-        return dateNumber == SpecialDiscounterConstant.SUNDAY_MARK.getNumber()
-                || day == SpecialDiscounterConstant.CHRISTMAS.getNumber();
+        return dateNumber == DiscounterConstant.SUNDAY_MARK.getNumber()
+                || day == DiscounterConstant.CHRISTMAS.getNumber();
     }
 
     private boolean isOverMinimum() {
-        return cost >= SpecialDiscounterConstant.MINIMUM_DISCOUNT_COST.getNumber();
+        return cost >= DiscounterConstant.MINIMUM_DISCOUNT_COST.getNumber();
     }
 }
