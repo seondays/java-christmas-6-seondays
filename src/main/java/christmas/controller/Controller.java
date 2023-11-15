@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Controller {
-    private final boolean isInputIncomplete = true;
     private final StringMaker stringMaker;
     private final InputView inputView;
+    private final boolean isInputIncomplete = true;
     private Map<Menu, Integer> orderedMenu;
     private int beforeDiscountCost;
     private int afterDiscountCost;
@@ -43,6 +43,7 @@ public class Controller {
         // 특별할인
         startDiscount(new SpecialDiscounter(day, afterDiscountCost));
         printResult();
+        inputView.close();
     }
 
     // 주문받기 시작

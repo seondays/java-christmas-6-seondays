@@ -19,4 +19,8 @@ public class InputView {
         inputValidator.validateInputMenu(input);
         return input;
     }
+
+    public void close() {
+        Console.close();
+    }
 }
