@@ -38,11 +38,11 @@ public class Controller {
         // 총 주문 금액에 따라서 샴페인 증정하기
         startGiftEvent();
         // 평일 혹은 주말 할인 하기
-        startDiscount(new DecemberDiscounter(date, beforeDiscountCost, orderedMenu));
+        startDiscount(DecemberDiscounter.of(date, beforeDiscountCost, orderedMenu));
         // 크리스마스 특별 할인 하기
-        startDiscount(new ChristmasDiscounter(date, afterDiscountCost));
+        startDiscount(ChristmasDiscounter.of(date, afterDiscountCost));
         // 특별할인
-        startDiscount(new SpecialDiscounter(date, afterDiscountCost));
+        startDiscount(SpecialDiscounter.of(date, afterDiscountCost));
         printResult();
         inputView.close();
     }

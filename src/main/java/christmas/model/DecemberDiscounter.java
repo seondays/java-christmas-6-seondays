@@ -14,11 +14,15 @@ public class DecemberDiscounter implements Discounter {
     private final int resultAmount;
     private final int cost;
 
-    public DecemberDiscounter(Date date, int cost, Map<Menu, Integer> orderedMenu) {
+    private DecemberDiscounter(Date date, int cost, Map<Menu, Integer> orderedMenu) {
         this.date = date;
         this.cost = cost;
         this.orderedMenu = orderedMenu;
         resultAmount = countDiscountMenu() * DISCOUNT_AMOUNT;
+    }
+
+    public static DecemberDiscounter of(Date date, int cost, Map<Menu, Integer> orderedMenu) {
+        return new DecemberDiscounter(date, cost, orderedMenu);
     }
 
     @Override

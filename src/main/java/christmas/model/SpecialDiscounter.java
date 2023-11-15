@@ -8,10 +8,14 @@ public class SpecialDiscounter implements Discounter {
     private final int cost;
     private int resultAmount;
 
-    public SpecialDiscounter(Date date, int cost) {
+    private SpecialDiscounter(Date date, int cost) {
         this.date = date;
         this.cost = cost;
         setResultAmount();
+    }
+
+    public static SpecialDiscounter of(Date date, int cost) {
+        return new SpecialDiscounter(date, cost);
     }
 
     @Override

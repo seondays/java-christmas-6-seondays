@@ -8,10 +8,14 @@ public class ChristmasDiscounter implements Discounter {
     private final int cost;
     private int resultAmount;
 
-    public ChristmasDiscounter(Date date, int cost) {
+    private ChristmasDiscounter(Date date, int cost) {
         this.date = date;
         this.cost = cost;
         setResultAmount();
+    }
+
+    public static ChristmasDiscounter of(Date date, int cost) {
+        return new ChristmasDiscounter(date, cost);
     }
 
     @Override
