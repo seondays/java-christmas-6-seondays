@@ -2,11 +2,10 @@ package christmas.controller;
 
 import christmas.utils.constant.Badge;
 import christmas.model.ChristmasDiscounter;
-import christmas.model.DecemberDiscounter;
 import christmas.model.Discounter;
 import christmas.model.Gift;
 import christmas.utils.constant.Menu;
-import christmas.model.DecemberDiscountChecker;
+import christmas.model.DecemberDiscounter;
 import christmas.model.RestaurantWaiter;
 import christmas.model.StringMaker;
 import christmas.model.SpecialDiscounter;
@@ -17,33 +16,36 @@ import java.util.List;
 import java.util.Map;
 
 public class Controller {
+    private final boolean isInputIncomplete = true;
+    private final StringMaker stringMaker;
+    private final InputView inputView;
     private Map<Menu, Integer> orderedMenu;
-    private Discounter discounter;
-    private DecemberDiscountChecker decemberDiscountChecker;
     private int beforeDiscountCost;
     private int afterDiscountCost;
     private int discountAmount;
-    StringMaker stringMaker = new StringMaker();
-    InputView inputView = new InputView();
     private int day;
-    RestaurantWaiter RestaurantWaiter;
+
+    public Controller(StringMaker stringMaker, InputView inputView) {
+        this.stringMaker = stringMaker;
+        this.inputView = inputView;
+    }
 
     public void run() {
         orderProcess();
-        decemberDiscountChecker = new DecemberDiscountChecker(day, orderedMenu);
         // 할인전 총주문 금액 출력
         OutputView.printBeforeDiscountCost(beforeDiscountCost);
         // 총 주문 금액에 따라서 샴페인 증정하기
         startGiftEvent();
         // 평일 혹은 주말 할인 하기
-        startDecemberDiscount();
+        startDiscount(new DecemberDiscounter(day, beforeDiscountCost, orderedMenu));
         // 크리스마스 특별 할인 하기
-        startChristmasDiscount();
+        startDiscount(new ChristmasDiscounter(day, afterDiscountCost));
         // 특별할인
-        startSpecialDiscount();
+        startDiscount(new SpecialDiscounter(day, afterDiscountCost));
         printResult();
     }
 
+    // 주문받기 시작
     public void orderProcess() {
         OutputView.printInputDateMessage();
         day = getInputDate();
@@ -61,19 +63,9 @@ public class Controller {
         OutputView.printBadgeInformation(Badge.getBadge(discountAmount));
     }
 
-    // 특별 할인을 체크해서 진행
-    public void startSpecialDiscount() {
-        discounter = new SpecialDiscounter(day, afterDiscountCost);
+    public void startDiscount(Discounter discounter) {
         afterDiscountCost = discounter.discountCost();
-        stringMaker.addSpecialString(discounter.getResultAmount());
-        discountAmount += discounter.getResultAmount();
-    }
-
-    // 크리스마스 할인을 체크해서 진행
-    public void startChristmasDiscount() {
-        discounter = new ChristmasDiscounter(day, afterDiscountCost);
-        afterDiscountCost = discounter.discountCost();
-        stringMaker.addChristmasString(discounter.getResultAmount());
+        stringMaker.addString(discounter.getResultAmount(), discounter.getDiscountMessage());
         discountAmount += discounter.getResultAmount();
     }
 
@@ -85,20 +77,11 @@ public class Controller {
         discountAmount += gift.getGiftAmount();
     }
 
-    // 12월 할인을 체크해서 진행
-    public void startDecemberDiscount() {
-        discounter = new DecemberDiscounter(beforeDiscountCost, decemberDiscountChecker.countDiscountMenu());
-        afterDiscountCost = discounter.discountCost();
-        stringMaker.addWeekOrWeekendString(discounter.getResultAmount(),
-                decemberDiscountChecker.getWeekOrWeekend());
-        discountAmount += discounter.getResultAmount();
-    }
-
     // 날짜 입력 받기 구현
     public int getInputDate() {
-        while (true) {
+        while (isInputIncomplete) {
             try {
-                return Integer.parseInt(inputView.getInputDate());
+                return Parser.parseStringToInt(inputView.getInputDate());
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -107,12 +90,12 @@ public class Controller {
 
     // 메뉴 입력 받아서 리턴하기
     public Map<Menu, Integer> getMenu() {
-        while (true) {
+        while (isInputIncomplete) {
             try {
                 List<String> input = Parser.splitInput(inputView.getInputMenu());
-                RestaurantWaiter = new RestaurantWaiter(input);
-                beforeDiscountCost = RestaurantWaiter.getTotalMenuCost();
-                return RestaurantWaiter.getOrderedMenu();
+                christmas.model.RestaurantWaiter restaurantWaiter = new RestaurantWaiter(input);
+                beforeDiscountCost = restaurantWaiter.getTotalMenuCost();
+                return restaurantWaiter.getOrderedMenu();
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
