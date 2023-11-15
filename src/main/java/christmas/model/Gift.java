@@ -1,7 +1,10 @@
 package christmas.model;
 
+import christmas.utils.constant.Menu;
+
 public class Gift {
     private static final int GIFT_CONDITION = 120_000;
+    private static final String GIFT_COUNT = " 1개";
     private final int cost;
     private Menu gift;
 
@@ -30,7 +33,7 @@ public class Gift {
     public String toString() {
         String output = gift.getKoreaName();
         if (cost >= GIFT_CONDITION) {
-            output += " 1개";
+            output += GIFT_COUNT;
         }
         return output;
     }

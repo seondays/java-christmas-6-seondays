@@ -1,6 +1,8 @@
 package christmas.model;
 
 import christmas.utils.Parser;
+import christmas.utils.constant.ErrorMessage;
+import christmas.utils.constant.Menu;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,7 @@ public class RestaurantWaiter {
                 .mapToInt(Integer::intValue)
                 .sum();
         if (menuCount > MAX_MENU_COUNT || menuCount < MIN_MENU_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU.getMessage());
         }
     }
 
@@ -44,14 +46,14 @@ public class RestaurantWaiter {
         if (orderedMenu.keySet()
                 .stream()
                 .allMatch(menu -> menu.getMenuType().equals("drink"))) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU.getMessage());
         }
     }
 
     // 없음이 입력되었을때 예외처리 해야 한다.
     private void validateNone(String menu) {
         if (menu.equals(Menu.NONE.getKoreaName())) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU.getMessage());
         }
     }
 
