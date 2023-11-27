@@ -1,27 +1,55 @@
 package christmas.model;
 
-public class DiscountProcessor {
+import christmas.utils.constant.Menu;
+import java.util.Map;
 
-    //할인하기 전 금액
-    private final int beforeDiscountCost;
-    //할인을 마친 이후 금액
-    private int afterDiscountCost;
-    //할인을 얼마나 받았는지의 금액
+public class DiscountProcessor {
+    private final Map<Menu, Integer> orderedMenu;
+    private final Date date;
+    private final BenefitResultMaker benefitResultMaker;
+    private int discountCost;
     private int discountAmount;
 
-    public DiscountProcessor(int beforeDiscountCost) {
-        this.beforeDiscountCost = beforeDiscountCost;
+    public DiscountProcessor(int discountCost, Date date, Map<Menu, Integer> orderedMenu,
+                             BenefitResultMaker benefitResultMaker) {
+        this.discountCost = discountCost;
+        this.date = date;
+        this.orderedMenu = orderedMenu;
+        this.benefitResultMaker = benefitResultMaker;
     }
 
-    public int getAfterDiscountCost() {
-        return afterDiscountCost;
+    public void start() {
+        decemberDiscount();
+        christmasDiscount();
+        specialDiscount();
+    }
+
+    public void decemberDiscount() {
+        Discounter discounter = DecemberDiscounter.of(date, discountCost, orderedMenu);
+        startDiscount(discounter);
+    }
+
+    public void christmasDiscount() {
+        Discounter discounter = ChristmasDiscounter.of(date, discountCost);
+        startDiscount(discounter);
+    }
+
+    public void specialDiscount() {
+        Discounter discounter = SpecialDiscounter.of(date, discountCost);
+        startDiscount(discounter);
+    }
+
+    private void startDiscount(Discounter discounter) {
+        discountCost = discounter.discountCost();
+        benefitResultMaker.addString(discounter.getResultAmount(), discounter.getDiscountMessage());
+        discountAmount += discounter.getResultAmount();
     }
 
     public int getDiscountAmount() {
         return discountAmount;
     }
 
-    public int getBeforeDiscountCost() {
-        return beforeDiscountCost;
+    public int getDiscountCost() {
+        return discountCost;
     }
 }
