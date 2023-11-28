@@ -1,15 +1,12 @@
 package christmas.controller;
 
 import christmas.model.Date;
+import christmas.model.DiscountProcessor;
 import christmas.utils.constant.Badge;
-import christmas.model.ChristmasDiscounter;
-import christmas.model.Discounter;
 import christmas.model.Gift;
 import christmas.utils.constant.Menu;
-import christmas.model.DecemberDiscounter;
 import christmas.model.RestaurantWaiter;
 import christmas.model.BenefitResultMaker;
-import christmas.model.SpecialDiscounter;
 import christmas.utils.string.Parser;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -22,8 +19,6 @@ public class Controller {
     private final boolean isInputIncomplete = true;
     private Map<Menu, Integer> orderedMenu;
     private int beforeDiscountCost;
-    private int afterDiscountCost;
-    private int discountAmount;
     private Date date;
 
     public Controller(BenefitResultMaker benefitResultMaker, InputView inputView) {
@@ -34,15 +29,15 @@ public class Controller {
     public void run() {
         orderProcess();
         OutputView.printBeforeDiscountCost(beforeDiscountCost);
-        startGiftEvent();
-        startDiscount(DecemberDiscounter.of(date, beforeDiscountCost, orderedMenu));
-        startDiscount(ChristmasDiscounter.of(date, afterDiscountCost));
-        startDiscount(SpecialDiscounter.of(date, afterDiscountCost));
-        printBenefitResult();
+        DiscountProcessor discountProcessor = new DiscountProcessor(beforeDiscountCost, date, orderedMenu,
+                benefitResultMaker);
+        discountProcessor.addGiftCost(giftEventResult());
+        discountProcessor.start();
+        printBenefitResult(discountProcessor);
         inputView.close();
     }
 
-    public void orderProcess() {
+    private void orderProcess() {
         OutputView.printInputDateMessage();
         date = new Date(getInputDate());
         OutputView.printInputMenuMessage();
@@ -51,27 +46,22 @@ public class Controller {
         OutputView.printMenu(orderedMenu);
     }
 
-    public void printBenefitResult() {
+    private void printBenefitResult(DiscountProcessor discountProcessor) {
         OutputView.printBenefitInformation(benefitResultMaker.getBenefitResult());
-        OutputView.printBenefitCost(discountAmount);
-        OutputView.printPaymentCost(afterDiscountCost);
-        OutputView.printBadgeInformation(Badge.getBadge(discountAmount));
+        OutputView.printBenefitCost(discountProcessor.getDiscountAmount());
+        OutputView.printPaymentCost(discountProcessor.getDiscountCost());
+        OutputView.printBadgeInformation(Badge.getBadge(discountProcessor.getDiscountAmount()));
     }
 
-    public void startDiscount(Discounter discounter) {
-        afterDiscountCost = discounter.discountCost();
-        benefitResultMaker.addString(discounter.getResultAmount(), discounter.getDiscountMessage());
-        discountAmount += discounter.getResultAmount();
-    }
-
-    public void startGiftEvent() {
+    private int giftEventResult() {
         Gift gift = new Gift(beforeDiscountCost);
         OutputView.printGift(gift.toString());
         benefitResultMaker.addGiftString(gift.getGiftPrice());
-        discountAmount += gift.getGiftPrice();
+        return gift.getGiftPrice();
     }
 
-    public int getInputDate() {
+    // supplier 학습 후 적용해보자
+    private int getInputDate() {
         while (isInputIncomplete) {
             try {
                 return Parser.parseStringToInt(inputView.getInputDate());
@@ -81,7 +71,7 @@ public class Controller {
         }
     }
 
-    public Map<Menu, Integer> getMenu() {
+    private Map<Menu, Integer> getMenu() {
         while (isInputIncomplete) {
             try {
                 List<String> input = Parser.splitInput(inputView.getInputMenu());
