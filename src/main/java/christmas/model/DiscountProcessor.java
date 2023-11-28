@@ -45,6 +45,10 @@ public class DiscountProcessor {
         discountAmount += discounter.getResultAmount();
     }
 
+    public void addGiftCost(int giftCost) {
+        discountAmount += giftCost;
+    }
+
     public int getDiscountAmount() {
         return discountAmount;
     }
